@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>KAIROS</title>
+  <meta name="description" content="KAIROS — the right moment, together. A shared calendar for families, couples and friends.">
+  <meta name="theme-color" content="#1F6F5C">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#quickInput">Skip to add an event</a>
+
+  <header class="appbar">
+    <div class="shell appbar-inner">
+      <div class="brand">
+          <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="24" cy="24" r="21" class="logo-face"/>
+            <g class="logo-ticks">
+              <line x1="24" y1="6" x2="24" y2="9"/><line x1="42" y1="24" x2="39" y2="24"/>
+              <line x1="24" y1="42" x2="24" y2="39"/><line x1="6" y1="24" x2="9" y2="24"/>
+            </g>
+            <line id="logoHand" class="logo-hand" x1="24" y1="24" x2="24" y2="10"/>
+            <circle cx="24" cy="24" r="3.2" class="logo-dot"/>
+          </svg>
+          <div class="brand-text">
+            <span class="wordmark">KAIROS</span>
+            <button class="group-name" id="groupName" type="button" aria-label="Rename your calendar"></button>
+          </div>
+      </div>
+      <div class="top-actions">
+          <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch light or dark mode">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
+          </button>
+          <button class="icon-btn" id="peopleBtn" type="button" aria-label="People">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.8"/><path d="M16.5 14.6c2.8.2 4.5 2 5 5"/></svg>
+          </button>
+          <button class="icon-btn" id="settingsBtn" type="button" aria-label="Settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+          </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell layout">
+    <aside class="col-side">
+      <section class="now-panel" id="sky" aria-label="Now">
+        <div class="stars" aria-hidden="true"></div>
+        <div class="now-head">
+          <div>
+            <p class="greeting" id="greeting">Hello</p>
+            <p class="hero-date" id="heroDate"></p>
+          </div>
+          <p class="clock" id="clock" aria-live="off">--:--</p>
+        </div>
+        <div class="moment" id="moment" aria-live="polite"></div>
+        <p class="moment-empty">Nothing happening right now.</p>
+      </section>
+
+      <section class="panel composer" aria-label="Add an event">
+        <h2 class="panel-title">Add an event</h2>
+        <form id="quickForm" autocomplete="off">
+          <label class="sr-only" for="quickInput">Type an event</label>
+          <div class="composer-row">
+            <input id="quickInput" class="quick-input" type="text" enterkeyhint="done"
+                   placeholder="e.g. Dinner with Sam Friday 7pm">
+            <button class="btn btn-primary" id="quickAdd" type="submit" disabled>Add</button>
+          </div>
+        </form>
+        <div class="preview" id="preview" aria-live="polite"></div>
+        <button class="link-btn" id="moreBtn" type="button">More options</button>
+      </section>
+
+      <section class="panel countdown-panel" aria-label="Countdowns">
+        <h2 class="panel-title">Countdowns</h2>
+        <div class="countdowns" id="countdowns"></div>
+      </section>
+    </aside>
+
+    <main class="col-main">
+      <section class="people-bar" id="peopleBar" aria-label="Show events for"></section>
+
+      <section class="panel week" aria-label="Week">
+        <div class="week-head">
+          <h2 class="month-label" id="monthLabel"></h2>
+          <button class="btn btn-outline btn-sm" id="todayBtn" type="button">Today</button>
+          <div class="week-nav">
+            <button class="icon-btn" id="prevWeek" type="button" aria-label="Previous week">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <button class="icon-btn" id="nextWeek" type="button" aria-label="Next week">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="week-strip" id="weekStrip" role="tablist"></div>
+      </section>
+
+      <section class="panel day" aria-labelledby="dayTitle">
+        <div class="day-head">
+          <h2 id="dayTitle">Today</h2>
+          <button class="btn btn-outline btn-sm" id="addNoteBtn" type="button">Add note</button>
+        </div>
+        <div class="notes" id="notes"></div>
+        <div class="filter-hint" id="filterHint" hidden></div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+    </main>
+  </div>
+  <footer class="shell footer">KAIROS · The right moment, together.</footer>
+
+  <!-- Event sheet -->
+  <dialog class="sheet" id="eventSheet" aria-labelledby="eventSheetTitle">
+    <form id="eventForm" method="dialog" class="sheet-body">
+      <div class="sheet-grip" aria-hidden="true"></div>
+      <h2 id="eventSheetTitle">New event</h2>
+      <label class="field">
+        <span>What</span>
+        <input name="title" type="text" required placeholder="Dinner, dentist, football…" maxlength="120">
+      </label>
+      <label class="field">
+        <span>Day</span>
+        <input name="date" type="date" required>
+      </label>
+      <div class="field-row">
+        <label class="field">
+          <span>Starts</span>
+          <input name="start" type="time">
+        </label>
+        <label class="field">
+          <span>Ends</span>
+          <input name="end" type="time">
+        </label>
+      </div>
+      <p class="hint">Leave “Starts” empty for an all-day event. No end time? We’ll make it one hour.</p>
+      <fieldset class="field">
+        <legend>Who’s it for</legend>
+        <div class="choice-row" id="eventPeople"></div>
+      </fieldset>
+      <div class="field-row">
+        <label class="field">
+          <span>Repeat</span>
+          <select name="repeat">
+            <option value="none">Just once</option>
+            <option value="daily">Every day</option>
+            <option value="weekly">Every week</option>
+            <option value="monthly">Every month</option>
+            <option value="yearly">Every year</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Remind</span>
+          <select name="reminder">
+            <option value="">No reminder</option>
+            <option value="0">When it starts</option>
+            <option value="10">10 min before</option>
+            <option value="30">30 min before</option>
+            <option value="60">1 hour before</option>
+            <option value="1440">1 day before</option>
+          </select>
+        </label>
+      </div>
+      <label class="field">
+        <span>Note</span>
+        <textarea name="note" rows="2" maxlength="500" placeholder="Anything to remember?"></textarea>
+      </label>
+      <label class="toggle">
+        <input name="pinned" type="checkbox">
+        <span class="toggle-ui" aria-hidden="true"></span>
+        <span>Count down to this <small>Show “12 days to go” at the top</small></span>
+      </label>
+      <div class="sheet-actions">
+        <button class="btn btn-danger" id="deleteEventBtn" type="button" hidden>Delete</button>
+        <span class="spacer"></span>
+        <button class="btn btn-ghost" value="cancel" type="button" data-close>Cancel</button>
+        <button class="btn btn-primary" id="saveEventBtn" type="submit" value="save">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- People sheet -->
+  <dialog class="sheet" id="peopleSheet" aria-labelledby="peopleSheetTitle">
+    <div class="sheet-body">
+      <div class="sheet-grip" aria-hidden="true"></div>
+      <h2 id="peopleSheetTitle">People</h2>
+      <p class="hint">Everyone here can be tagged. Type their name in an event, or “everyone” for the whole group.</p>
+      <ul class="people-list" id="peopleList"></ul>
+      <form class="person-form" id="personForm" autocomplete="off" hidden>
+        <h3 id="personFormTitle">Add someone</h3>
+        <div class="person-edit">
+          <label class="avatar-pick" title="Choose a photo">
+            <span class="face face-xl" id="personPreview"></span>
+            <input type="file" accept="image/*" id="personPhoto" class="sr-only">
+            <span class="avatar-pick-label">Photo</span>
+          </label>
+          <label class="field grow">
+            <span>Name</span>
+            <input name="name" type="text" required maxlength="30" placeholder="Name">
+          </label>
+        </div>
+        <fieldset class="field">
+          <legend>Face</legend>
+          <div class="emoji-grid" id="emojiGrid"></div>
+        </fieldset>
+        <fieldset class="field">
+          <legend>Colour</legend>
+          <div class="swatches" id="swatches"></div>
+        </fieldset>
+        <div class="sheet-actions">
+          <button class="btn btn-danger" id="deletePersonBtn" type="button" hidden>Remove</button>
+          <span class="spacer"></span>
+          <button class="btn btn-ghost" id="cancelPersonBtn" type="button">Cancel</button>
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </form>
+      <div class="sheet-actions" id="peopleActions">
+        <button class="btn btn-soft" id="addPersonBtn" type="button">+ Add someone</button>
+        <span class="spacer"></span>
+        <button class="btn btn-primary" type="button" data-close>Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Note sheet -->
+  <dialog class="sheet" id="noteSheet" aria-labelledby="noteSheetTitle">
+    <form class="sheet-body" id="noteForm" method="dialog">
+      <div class="sheet-grip" aria-hidden="true"></div>
+      <h2 id="noteSheetTitle">A little note</h2>
+      <label class="field">
+        <span class="sr-only">Note</span>
+        <textarea name="text" rows="3" maxlength="140" required placeholder="“I’ll pick up the kids”"></textarea>
+      </label>
+      <fieldset class="field">
+        <legend>From</legend>
+        <div class="choice-row" id="noteBy"></div>
+      </fieldset>
+      <div class="sheet-actions">
+        <span class="spacer"></span>
+        <button class="btn btn-ghost" type="button" data-close>Cancel</button>
+        <button class="btn btn-primary" type="submit">Stick it</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Settings sheet -->
+  <dialog class="sheet" id="settingsSheet" aria-labelledby="settingsSheetTitle">
+    <div class="sheet-body">
+      <div class="sheet-grip" aria-hidden="true"></div>
+      <h2 id="settingsSheetTitle">Settings</h2>
+      <label class="field">
+        <span>Calendar name</span>
+        <input id="calendarName" type="text" maxlength="40" placeholder="The Martins">
+      </label>
+      <fieldset class="field">
+        <legend>Look</legend>
+        <div class="segmented" id="themeChoice">
+          <button type="button" data-theme-choice="auto">Auto</button>
+          <button type="button" data-theme-choice="light">Light</button>
+          <button type="button" data-theme-choice="dark">Dark</button>
+        </div>
+      </fieldset>
+      <div class="field">
+        <span>Reminders</span>
+        <p class="hint" id="notifyStatus"></p>
+        <button class="btn btn-soft" id="notifyBtn" type="button">Turn on reminders</button>
+      </div>
+      <div class="field">
+        <span>Start over</span>
+        <div class="stack-row">
+          <button class="btn btn-soft" id="sampleBtn" type="button">Load the example calendar</button>
+          <button class="btn btn-danger" id="eraseBtn" type="button">Erase everything</button>
+        </div>
+      </div>
+      <div class="sheet-actions">
+        <span class="spacer"></span>
+        <button class="btn btn-primary" type="button" data-close>Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/time.js"></script>
+  <script src="js/parser.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

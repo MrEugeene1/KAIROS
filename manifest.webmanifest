@@ -1,0 +1,12 @@
+{
+  "name": "KAIROS — The right moment, together",
+  "short_name": "KAIROS",
+  "description": "A warm, simple shared calendar for families, couples and friends.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#EDF1EE",
+  "theme_color": "#1F6F5C",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

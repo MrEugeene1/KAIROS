@@ -47,3 +47,7 @@ tests/parser.test.js  node tests/parser.test.js
 - **Sync is per device.** Changes appear live in every open KAIROS tab on the same browser, but not yet on other people's phones. `js/store.js` isolates this in `LocalBackend`, so a Supabase or Firebase backend can replace it.
 - **Reminders only fire while the app is open** (or in a background tab). Reminders on a closed app need server push.
 - Editing or deleting a repeating event changes every repeat.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
